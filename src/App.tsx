@@ -53,7 +53,7 @@ function App() {
     <div>
       <nav
         className='navbar navbar-light'
-        style={{ 'background-color': '#e3f2fd' }}
+        style={{ 'background': '#8663c2', padding:'12px', color:"#FFF" }}
       >
         Github Profile
       </nav>
