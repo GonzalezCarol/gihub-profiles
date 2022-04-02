@@ -1,0 +1,15 @@
+.infos-container {
+  margin: auto;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  border: 0.5px solid #743ad5;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(to left, #743ad5, #d53a9d) border-box;
+  margin-bottom: 24px;
+}
+
+.infos {
+  text-align: center;
+}

@@ -1,20 +1,19 @@
 import React, { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
-export interface GithubApiCall {
-  avatar_url: string;
-  login: string;
-  name: string;
-  html_url: string;
-  followers: string;
-  public_repos: string;
-  repos_url: string;
-}
+
+import  NavComponent from './components/NavComponent';
+import { CardComponent } from './components/CardComponent';
+import { CardUserBeFound } from './components/CardUserBeFound';
+import { GithubApiCall } from './components/CardComponent';
 
 function App() {
+  const navTitle = "Github Friends"
+
   const [githubData, setGithubData] = useState<GithubApiCall[]>([]);
   const [profileName, setNameProfile] = useState('');
   const [userCouldBeFound, setUserCouldBeFound] = useState(true);
+
   const githubApiCall = async (userName: string): Promise<GithubApiCall> => {
     try {
       const response = await fetch(`https://api.github.com/users/${userName}`);
@@ -24,6 +23,7 @@ function App() {
       throw error;
     }
   };
+
 
   const checkIfUserExist = (dataFromApi: any) => {
     if (dataFromApi.message === 'Not Found') {
@@ -51,12 +51,8 @@ function App() {
 
   return (
     <div>
-      <nav
-        className='navbar navbar-light'
-        style={{ 'background': '#8663c2', padding:'12px', color:"#FFF" }}
-      >
-        Github Profile
-      </nav>
+
+      <NavComponent title={navTitle} />
 
       <div className='input-button-container'>
         <input
@@ -70,36 +66,13 @@ function App() {
           Buscar
         </button>
       </div>
+
       {userCouldBeFound ? (
         <div>
-          {githubData.map((value, index) => (
-            <div className='infos-container' key={index}>
-              <img src={value.avatar_url} />
-              <div className='infos'>
-                <h3>Display Name</h3>
-                <span>{value.login}</span>
-                <h3>Name</h3>
-                <span>{value.name}</span>
-                <h3>URL</h3>
-                <span>{value.html_url}</span>
-                <h3>Followers</h3>
-                <span>{value.followers}</span>
-                <h3>Public Repositories</h3>
-                <span>{value.public_repos}</span>
-                <h3>Repositories URL</h3>
-                <span>{value.repos_url}</span>
-              </div>
-            </div>
-          ))}
+          <CardComponent githubData={githubData}/>
         </div>
       ) : (
-        <div className='alert alert-warning' role='alert'>
-          <h4 className='alert-heading'>OOOPS...</h4>
-          <hr></hr>
-          <p className='mb-0'>
-            <p>The user could not be found, try again</p>
-          </p>
-        </div>
+        <CardUserBeFound title="OOOPS..." text="The user could not be found, try again"/>
       )}
     </div>
   );
